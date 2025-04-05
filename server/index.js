@@ -10,7 +10,6 @@ const server = createServer(app)
 const io=new Server(server)
 
 
-
 io.on('connection', (socket) => {
     console.log('Un usuario se ha conectado')
 
@@ -20,6 +19,9 @@ io.on('connection', (socket) => {
 })
 
 app.use (logger('dev'))
+
+app.use('/Imagenes', express.static('Imagenes'))
+
 
 app.get('/', (req, res) => {
     res.sendFile(process.cwd() + '/client/index.html')
