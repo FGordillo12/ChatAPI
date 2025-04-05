@@ -46,7 +46,7 @@
             background-image: url('/Imagenes/fondo.png'); background-size: cover;
             background-size: cover;
             background-position: center;
-
+            
         }
         
 
@@ -94,18 +94,63 @@
             background: #0cf;
         }
 
+        #titulo-chat {
+        position: absolute;
+        top: 120px;
+        left: 66px;
+        color: white;
+        font-size: 44px;
+        font-weight: bold;
+        background-color: rgba(0,0,0,0.5);
+        padding: 8px 12px;
+        border-radius: 8px;
+}
 
 
+        #subtitulo-chat {
+            position: absolute;
+            top: 235px; /* más abajo que el título */
+            left: 125px;
+            color: white;
+            font-size: 16px;
+            background-color: rgba(0,0,0,0.4);
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+
+        #piepagina-chat {
+        position: absolute;
+        bottom: 10px;
+        left: 20px;
+        font-size: 12px;
+        color: #888;
+}
+
+
+
+
+        
     </style>
 </head>
 
 <body>
-    
+
+    <div id="titulo-chat">💬 Bienvenido a <strong>ChatAPI</strong></div>
+
+    <div id="subtitulo-chat" style="text-align: center;">
+        Conéctate entre Empresa y Cliente en tiempo real <br>
+        Comparte tus ideas al instante.
+      </div>
+
+    <div id="piepagina-chat">© 2025 ChatAPI | Creado por FullHacks</div>
+
+
     <section id="chat">
         <form id="form">
             <input type="text" name="message" id="input" placeholder="Escribe tu mensaje"
             autocomplete="off" />
-            <button type="submit">Enviar</button>
+            <button type="submit">📤 Enviar</button>
+
             
         </form>
     </section>
