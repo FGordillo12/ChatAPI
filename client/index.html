@@ -28,7 +28,18 @@
             height: 100vh;
             padding: 36px;
             grid-template-rows: 1fr; 
+
+
+
+            background-image: url('../Imagenes/fondo.png');
+            background-size: cover; /* ajusta la imagen al tamaño de la pantalla */
+            background-repeat: no-repeat;
+            background-position: center;
+            
+
+
         }
+        
 
         #chat{
             border: 1px solid #ccc;
@@ -79,14 +90,16 @@
 </head>
 
 <body>
+    
     <section id="chat">
         <form id="form">
             <input type="text" name="message" id="input" placeholder="Escribe tu mensaje"
             autocomplete="off" />
             <button type="submit">Enviar</button>
+            
         </form>
     </section>
-    
+
 </body>
 
 </html>
