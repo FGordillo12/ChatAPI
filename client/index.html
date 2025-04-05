@@ -96,10 +96,10 @@
 
         #titulo-chat {
         position: absolute;
-        top: 120px;
-        left: 66px;
+        top: 70px;
+        left: 40px;
         color: white;
-        font-size: 44px;
+        font-size: 48px;
         font-weight: bold;
         background-color: rgba(0,0,0,0.5);
         padding: 8px 12px;
@@ -109,10 +109,10 @@
 
         #subtitulo-chat {
             position: absolute;
-            top: 235px; /* más abajo que el título */
-            left: 125px;
+            top: 170px; /* más abajo que el título */
+            left: 115px;
             color: white;
-            font-size: 16px;
+            font-size: 20px;
             background-color: rgba(0,0,0,0.4);
             padding: 6px 10px;
             border-radius: 6px;
@@ -122,18 +122,39 @@
         position: absolute;
         bottom: 10px;
         left: 20px;
-        font-size: 12px;
+        font-size: 14px;
         color: #888;
-}
+        }
+
+        #ventajas-chat {
+        position: absolute;
+        top: 250px; /* más abajo que el título */
+        left: 159px;
+        color: white;
+        font-size:18px;
+        background-color: rgba(0,0,0,0.4);
+        padding: 6px 10px;
+        border-radius: 6px;
+        }
 
 
-
+        .video-intro {
+        position: absolute;
+        left: 143px;
+        top: 490px; /* ajusta según donde quieras colocarlo */
+        }
 
         
     </style>
 </head>
 
 <body>
+
+    <div class="video-intro">
+        <video width="400" controls>
+        <source src="videos/introchatapi.mp4" type="video/mp4">
+        </video>
+    </div>
 
     <div id="titulo-chat">💬 Bienvenido a <strong>ChatAPI</strong></div>
 
@@ -144,13 +165,24 @@
 
     <div id="piepagina-chat">© 2025 ChatAPI | Creado por FullHacks</div>
 
+    <div id="ventajas-chat">
+        <h3>🚀 ¿Por qué usar ChatAPI?</h3>
+        <ul>
+          <li>🔒 Seguridad en tiempo real</li>
+          <li>🤝 Conexión directa Empresa - Cliente</li>
+          <li>⚡ Interfaz rápida y dinamica </li>
+          <li>📱 Acceso desde cualquier navegador</li>
+        </ul>
+      </div>
+      
+    
 
     <section id="chat">
         <form id="form">
             <input type="text" name="message" id="input" placeholder="Escribe tu mensaje"
             autocomplete="off" />
             <button type="submit">📤 Enviar</button>
-
+    
             
         </form>
     </section>
