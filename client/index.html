@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatconChat</title>
+    <title>ChatAPI</title>
 
 
 
@@ -175,7 +175,27 @@
         border-radius: 6px;     /* Alto del cuadro */ /* Color del cuadro */
         position: absolute;     /* Permite mover el cuadro */
         top: 440px;             /* Distancia desde el borde superior */
-        left: 115px;            /* Distancia desde el borde izquierdo */
+        left: 115px;      
+        z-index: 0;      /* Distancia desde el borde izquierdo */
+        }
+
+        #texto-video {
+        position: absolute;
+        top: 520px; /* más abajo que el título */
+        left: 317px;
+        color: white;
+        font-size:18px;
+        background-color: rgba(0,0,0,0.4);
+        padding: 6px 10px;
+        border-radius: 6px;
+        z-index: 1;
+        }
+
+        #imagen {
+        position: absolute;
+        top: 580px;   /* Mueve hacia abajo */
+        left: 360px; /* Mueve hacia la derecha */
+        width: 150px;
         }
 
         
@@ -183,6 +203,12 @@
 </head>
 
 <body>
+
+    <img src="../Imagenes/flecha.png" alt="Imagen libre" id="imagen">
+
+    <div id= "texto-video"> 🎥 Haz clic en el video para  <br>
+        ver cómo funciona ChatAPI </div>
+
     <div id="cuadro"></div>
 
     <div id="titulo-chat">💬 Bienvenido a <strong>ChatAPI</strong></div>
