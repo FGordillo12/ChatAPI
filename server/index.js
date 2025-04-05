@@ -14,6 +14,16 @@ const app = express()
 const server = createServer(app)
 const io=new Server(server)
 
+app.use (logger('dev'))
+
+app.use('/Imagenes', express.static(path.join(__dirname, '../Imagenes')))
+app.use('/videos', express.static(path.join(__dirname, '../videos')))
+app.use(express.static(path.join(__dirname, 'client'))) 
+
+app.get('/', (req, res) => {
+    res.sendFile(process.cwd() + '/client/index.html')
+})
+
 
 
 io.on('connection', (socket) => {
@@ -28,15 +38,6 @@ io.on('connection', (socket) => {
     })
 })
 
-app.use (logger('dev'))
-
-app.use('/Imagenes', express.static(path.join(__dirname, '../Imagenes')))
-
-
-
-app.get('/', (req, res) => {
-    res.sendFile(process.cwd() + '/client/index.html')
-})
 
 server.listen (port, () => {
     console.log(`Server running on port http://localhost:${port}`)

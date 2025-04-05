@@ -5,21 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ChatconChat</title>
 
-    <script type="module">
-        import {io} from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
-        const socket = io()
 
-        const form= document.getElementById('form')
-        const input = document.getElementById('input')
-
-        form.addEventListener ('submit', (e) => {
-            e.preventDefault()
-
-            if (input.value){
-                socket.emit('chat message', input.value)
-                input.value=''
-            }
-        })
 
 
 
@@ -96,7 +82,7 @@
 
         #titulo-chat {
         position: absolute;
-        top: 70px;
+        top: 50px;
         left: 40px;
         color: white;
         font-size: 48px;
@@ -108,14 +94,14 @@
 
 
         #subtitulo-chat {
-            position: absolute;
-            top: 170px; /* más abajo que el título */
-            left: 115px;
-            color: white;
-            font-size: 20px;
-            background-color: rgba(0,0,0,0.4);
-            padding: 6px 10px;
-            border-radius: 6px;
+        position: absolute;
+        top: 150px; /* más abajo que el título */
+        left: 115px;
+        color: white;
+        font-size: 20px;
+        background-color: rgba(0,0,0,0.4);
+        padding: 6px 10px;
+        border-radius: 6px;
         }
 
         #piepagina-chat {
@@ -128,7 +114,7 @@
 
         #ventajas-chat {
         position: absolute;
-        top: 250px; /* más abajo que el título */
+        top: 230px; /* más abajo que el título */
         left: 159px;
         color: white;
         font-size:18px;
@@ -140,8 +126,56 @@
 
         .video-intro {
         position: absolute;
-        left: 143px;
-        top: 490px; /* ajusta según donde quieras colocarlo */
+        left: 160px;
+        top: 455px; /* ajusta según donde quieras colocarlo */
+        width: 50%;           /* Se ajusta al ancho del contenedor */
+        max-width: 100px;      /* No sobrepasa este ancho */
+        height: auto;          /* Mantiene proporciones */
+        border-radius: 12px;   /* Opcional: bordes redondeados */
+        }
+
+
+
+        #videoModal {
+        display: none;
+        position: fixed;
+        z-index: 999;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0,0,0,0.8);
+        justify-content: center;
+        align-items: center;
+        }
+
+        #videoModal video {
+            width: 90%;
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        #closeModal {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 36px;
+            color: white;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        #cuadro {
+        width: 450px;           /* Ancho del cuadro */
+        height: 295px;     
+        background-color: rgba(0,0,0,0.4);
+        padding: 6px 10px;
+        border-radius: 6px;     /* Alto del cuadro */ /* Color del cuadro */
+        position: absolute;     /* Permite mover el cuadro */
+        top: 440px;             /* Distancia desde el borde superior */
+        left: 115px;            /* Distancia desde el borde izquierdo */
         }
 
         
@@ -149,12 +183,7 @@
 </head>
 
 <body>
-
-    <div class="video-intro">
-        <video width="400" controls>
-        <source src="videos/introchatapi.mp4" type="video/mp4">
-        </video>
-    </div>
+    <div id="cuadro"></div>
 
     <div id="titulo-chat">💬 Bienvenido a <strong>ChatAPI</strong></div>
 
@@ -175,6 +204,22 @@
         </ul>
       </div>
       
+    <div class="video-intro">
+        
+            <video width="150" id="previewVideo" style="cursor: pointer;" muted>
+                <source src="videos/introchatapi.mp4" type="video/mp4">
+            </video>
+        
+    </div>
+    
+    
+    <!-- Modal oculto -->
+        <div id="videoModal">
+            <button id="closeModal">✖</button>
+            <video controls autoplay>
+                <source src="videos/introchatapi.mp4" type="video/mp4">
+            </video>
+        </div>
     
 
     <section id="chat">
@@ -186,6 +231,43 @@
             
         </form>
     </section>
+    <script type="module">
+        import {io} from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
+        const socket = io()
+
+        const form= document.getElementById('form')
+        const input = document.getElementById('input')
+
+        form.addEventListener ('submit', (e) => {
+            e.preventDefault()
+
+            if (input.value){
+                socket.emit('chat message', input.value)
+                input.value=''
+            }
+        })
+
+
+
+        
+    </script>
+
+<script>
+    const previewVideo = document.getElementById('previewVideo');
+    const videoModal = document.getElementById('videoModal');
+    const closeModal = document.getElementById('closeModal');
+
+    previewVideo.addEventListener('click', () => {
+        videoModal.style.display = 'flex';
+    });
+
+    closeModal.addEventListener('click', () => {
+        videoModal.style.display = 'none';
+        const video = videoModal.querySelector('video');
+        video.pause();
+        video.currentTime = 0;
+    });
+</script>
 
 </body>
 
