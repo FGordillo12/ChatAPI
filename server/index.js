@@ -22,6 +22,10 @@ io.on('connection', (socket) => {
     socket.on('disconnect', ()=>{
         console.log('Un usuario se ha desconectado')
     })
+
+    socket.on('chat message', (msg)=> {
+        console.log('mensaje: ' +msg)
+    })
 })
 
 app.use (logger('dev'))
