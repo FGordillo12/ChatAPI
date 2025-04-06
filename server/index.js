@@ -2,24 +2,21 @@ import express from 'express'
 import logger from 'morgan'
 import {Server} from 'socket.io'
 import {createServer} from 'node:http'
-import path from 'path'
-import { fileURLToPath } from 'url'  
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const PORT = process.env.PORT ?? 3000
 
-const port = process.env.PORT ?? 3000
-
+//CREACION DEL SERVIDOR
 const app = express()
 const server = createServer(app)
 const io=new Server(server)
 
+//MOSTRAR EN CONSOLA LAS PETICIONES
 app.use (logger('dev'))
 
 //SERVIR ARCHIVOS ESTATICOS 
 app.use(express.static('public'))
 
-
+//ESTABLECER CONEXION CON WEBSOCKET
 io.on('connection', (socket) => {
     console.log('Un usuario se ha conectado')
 
@@ -33,7 +30,7 @@ io.on('connection', (socket) => {
 })
 
 
-server.listen (port, () => {
-    console.log(`Server running on port http://localhost:${port}`)
+server.listen (PORT, () => {
+    console.log(`Server running on port http://localhost:${PORT}`)
 })
                     

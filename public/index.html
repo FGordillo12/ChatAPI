@@ -1,105 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/styles/index.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/index_styles.css" />
     <title>ChatAPI</title>
-</head>
+  </head>
 
-<body>
-    <img src="/img/flecha.png" alt="Imagen libre" id="imagen">
+  <body>
+    <div class="contenedor">
+      <div class="container-texto">
+        <img src="/img/flecha.png" alt="Imagen libre" id="imagen" />
 
-    <div id= "texto-video"> 🎥 Haz clic en el video para  <br>
-        ver cómo funciona ChatAPI </div>
-
-    <div id="cuadro"></div>
-
-    <div id="titulo-chat">💬 Bienvenido a <strong>ChatAPI</strong></div>
-
-    <div id="subtitulo-chat" style="text-align: center;">
-        Conéctate entre Empresa y Cliente en tiempo real <br>
-        Comparte tus ideas al instante.
-      </div>
-
-    <div id="piepagina-chat">© 2025 ChatAPI | Creado por FullHacks</div>
-
-    <div id="ventajas-chat">
-        <h3>🚀 ¿Por qué usar ChatAPI?</h3>
-        <ul>
-          <li>🔒 Seguridad en tiempo real</li>
-          <li>🤝 Conexión directa Empresa - Cliente</li>
-          <li>⚡ Interfaz rápida y dinamica </li>
-          <li>📱 Acceso desde cualquier navegador</li>
-        </ul>
-      </div>
-      
-    <div class="video-intro">
-        
-            <video width="150" id="previewVideo" style="cursor: pointer;" muted>
-                <source src="videos/introchatapi.mp4" type="video/mp4">
-            </video>
-        
-    </div>
-    
-    
-    <!-- Modal oculto -->
-        <div id="videoModal">
-            <button id="closeModal">✖</button>
-            <video controls autoplay>
-                <source src="/videos/introchatapi.mp4" type="video/mp4">
-            </video>
+        <div id="texto-video">
+          🎥 Haz clic en el video para <br />
+          ver cómo funciona ChatAPI
         </div>
-    
 
-    <section id="chat">
-        <form id="form">
-            <input type="text" name="message" id="input" placeholder="Escribe tu mensaje"
-            autocomplete="off" />
+        <div id="cuadro"></div>
+
+        <div id="titulo-chat">💬 Bienvenido a <strong>ChatAPI</strong></div>
+
+        <div id="subtitulo-chat" style="text-align: center">
+          Conéctate entre Empresa y Cliente en tiempo real <br />
+          Comparte tus ideas al instante.
+        </div>
+
+        <div id="ventajas-chat">
+          <h3>🚀 ¿Por qué usar ChatAPI?</h3>
+          <ul>
+            <li>🔒 Seguridad en tiempo real</li>
+            <li>🤝 Conexión directa Empresa - Cliente</li>
+            <li>⚡ Interfaz rápida y dinamica</li>
+            <li>📱 Acceso desde cualquier navegador</li>
+          </ul>
+        </div>
+
+        <div class="video-intro">
+          <video width="150" id="previewVideo" style="cursor: pointer" muted>
+            <source src="videos/introchatapi.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <!-- Modal oculto -->
+        <div id="videoModal">
+          <button id="closeModal">✖</button>
+          <video controls autoplay>
+            <source src="/videos/introchatapi.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+      <div class="contenedor-chat">
+        <section id="chat">
+          <form id="form">
+            <input
+              type="text"
+              name="message"
+              id="input"
+              placeholder="Escribe tu mensaje"
+              autocomplete="off"
+            />
             <button type="submit">📤 Enviar</button>
-    
-            
-        </form>
-    </section>
-    <script type="module">
-        import {io} from 'https://cdn.socket.io/4.3.2/socket.io.esm.min.js'
-        const socket = io()
-
-        const form= document.getElementById('form')
-        const input = document.getElementById('input')
-
-        form.addEventListener ('submit', (e) => {
-            e.preventDefault()
-
-            if (input.value){
-                socket.emit('chat message', input.value)
-                input.value=''
-            }
-        })
-
-
-
-        
-    </script>
-
-<script>
-    const previewVideo = document.getElementById('previewVideo');
-    const videoModal = document.getElementById('videoModal');
-    const closeModal = document.getElementById('closeModal');
-
-    previewVideo.addEventListener('click', () => {
-        videoModal.style.display = 'flex';
-    });
-
-    closeModal.addEventListener('click', () => {
-        videoModal.style.display = 'none';
-        const video = videoModal.querySelector('video');
-        video.pause();
-        video.currentTime = 0;
-    });
-</script>
-
-</body>
-
-
+          </form>
+        </section>
+      </div>
+    </div>
+    <footer>
+        <div id="piepagina-chat">© 2025 ChatAPI | Creado por FullHacks</div>
+    </footer>
+  </body>
+  <script src="scripts/index_script.js" type="module" >
+  </script>
 </html>
