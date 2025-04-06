@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/styles_registro.css">
+  <title>Proyectos de Gestión</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="form-container">
+      <form class="input-registro">
+        <h2>Registro</h2>
+        <div class="container-input">
+          <ion-icon name="person-outline" alt="logo-facebook"></ion-icon>
+          <input type="text" placeholder="Nombres y Apellidos" id="nombres-registro" required>
+        </div>
+        <div class="error">
+          <p id="error-name"></p>
+        </div>
+        <div class="container-input">
+          <ion-icon name="mail-outline"></ion-icon>
+          <input type="email" placeholder="Correo" id="email-registro" required>
+        </div>
+        <div class="error">
+          <p id="error-email"></p>
+        </div>
+
+        <div class="container-input">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <input type="password" placeholder="Contraseña" id="password-registro" required>
+        </div>
+
+        <div class="container-input-radio">
+          <div>
+            <label for="usuario-check">Usuario</label>
+            <input type="radio" id="usuario-check" value="usuario" name="opcion-registro" required>
+          </div>
+          <div>
+            <label for="empresa-check" value="empresa">Empresa</label>
+            <input type="radio" id="empresa-check" name="opcion-registro" required>
+          </div>
+          
+        </div>
+
+        <div class="error">
+          <p id="error-password"></p>
+        </div>
+        <button type="submit" class="btn btn-principal" id="boton-registro-usuarios">REGISTRARSE</button>
+      </form>
+    </div>
+    <div class="container-texto">
+        <h3>Bienvenido a ChatAPI</h3>
+        <button type="submit" class="btn btn-login" id="boton-ventana-inicio">INICIAR SESIÓN</button>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script src="/scripts/script_registro.js"></script>
+
+
+</body>
+
+</html>
