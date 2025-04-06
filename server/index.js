@@ -16,14 +16,8 @@ const io=new Server(server)
 
 app.use (logger('dev'))
 
-app.use('/Imagenes', express.static(path.join(__dirname, '../Imagenes')))
-app.use('/videos', express.static(path.join(__dirname, '../videos')))
-app.use(express.static(path.join(__dirname, 'client'))) 
-
-app.get('/', (req, res) => {
-    res.sendFile(process.cwd() + '/client/index.html')
-})
-
+//SERVIR ARCHIVOS ESTATICOS 
+app.use(express.static('public'))
 
 
 io.on('connection', (socket) => {
