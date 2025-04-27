@@ -21,7 +21,7 @@ botonInicioSesion.addEventListener('click', async (event) => {
           headers: {
               'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ email_login, password_login }) // ⬅️ usar los mismos nombres
+          body: JSON.stringify({ email_login, password_login }) 
       });
 
       const data = await response.json();
