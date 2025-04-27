@@ -34,9 +34,9 @@ formularioRegistro.addEventListener('submit', async (e) => {
 
     if (response.ok) {
       alert(data.message);  //mensaje como alerta
-      window.location.href = '/'; // Redirecciona a donde quieras (por ejemplo login)
+      window.location.href = '/'; 
     } else {
-      console.error(data.message);
+      alert(data.message); // Mostrar mensaje de error en el formulario
     }
   } catch (error) {
     console.error('Error al registrar usuario:', error);
