@@ -4,6 +4,11 @@ const emailInput = document.getElementById('email_login');
 const passwordInput = document.getElementById('password_login');
 const errorLogin = document.getElementById('error-login');
 
+botonRegistro.addEventListener('click',(e) =>{
+  e.preventDefault();
+  window.location.href = '/';
+})
+
 botonInicioSesion.addEventListener('click', async (event) => {
   event.preventDefault(); 
 
