@@ -2,6 +2,8 @@ import express from "express";
 import logger from "morgan";
 import { Server } from "socket.io";
 import { createServer } from "node:http";
+import database from "./conexion.js";
+import usuarioRoutes from '../usuariosRoutes/usuariosRoutes.js';
 
 const PORT = process.env.PORT ?? 3000;
 
@@ -11,10 +13,16 @@ const server = createServer(app);
 const io = new Server(server);
 
 //MOSTRAR EN CONSOLA LAS PETICIONES
-app.use(logger("dev"));
+app.use(logger("dev")); 
 
 //SERVIR ARCHIVOS ESTATICOS
 app.use(express.static("public"));
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+//Rutas del usuario
+app.use('/api/usuarios', usuarioRoutes);
 
 //ESTABLECER CONEXION CON WEBSOCKET
 io.on("connection", (socket) => {

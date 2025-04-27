@@ -13,5 +13,5 @@ const connectionDb = async () => {
     console.log('Fallo en la conexion: ' + err);
   };
 };
-
+export default connectionDb;
 connectionDb();
