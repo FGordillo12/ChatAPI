@@ -8,7 +8,7 @@ import cors from 'cors'
 const PORT = process.env.PORT ?? 3000;
 
 //CREACION DEL SERVIDOR
-const app = express();
+export const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
