@@ -2,7 +2,9 @@ const botonRegistro = document.getElementById('boton-ventana-registro');
 const botonInicioSesion = document.getElementById('boton-inicio-sesion');
 const emailInput = document.getElementById('email_login');
 const passwordInput = document.getElementById('password_login');
-const errorLogin = document.getElementById('error-login');
+const errorLogin = document.getElementsById('error-login');
+const type = document.querySelector('input[name="type"]:checked')?.value;
+
 
 botonRegistro.addEventListener('click',(e) =>{
   e.preventDefault();

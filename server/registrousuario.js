@@ -5,12 +5,31 @@ const registrarusuario = async (req, res) => {
     try {
       const { nombreCompleto, email, password, type } = req.body;
   
+      //Validar que el nombre solo contenga caracteres alfabeticos
+      const regexNombre = /^[a-zA-Z\s]+$/;
+      if (!regexNombre.test(nombreCompleto)) {
+        return res.status(400).json({
+          status: 'error',
+          error: [{message:"error1"}],
+        });
+      }
       // Validar si ya existe el usuario con ese correo
       const usuarioExistente = await Usuario.findOne({ email });
-  
       if (usuarioExistente) {
-        return res.status(400).json({ message: 'El correo ya está registrado' });
+        return res.status(400).json({
+          status: 'error',
+          error: [{message:"error4"}],
+        });
       }
+
+      // Validar el formato de la contraseña
+      const regexPassword = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      if (!regexPassword.test(password)) {
+        return res.status(400).json({ 
+          status: 'error',
+          error: [{message:"error3"}],
+        });
+      } 
   
       // Encriptar la contraseña
       const salt = await bcrypt.genSalt(10);
