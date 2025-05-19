@@ -12,7 +12,7 @@ formularioRegistro.addEventListener('submit', async (e) => {
   const nombreCompleto = document.getElementById('nombres-registro').value;
   const email = document.getElementById('email-registro').value;
   const password = document.getElementById('password-registro').value;
-  const radios = document.getElementsByName('type');
+  const radios = document.getElementByName('type');
   let type;
   for (const radio of radios) {
     if (radio.checked) {

@@ -1,5 +1,3 @@
-
-
 import Usuario from '../models/usuarios.js';
 import bcrypt from 'bcrypt'; 
 
@@ -26,7 +24,7 @@ const registrarusuario = async (req, res) => {
       });
   
       await nuevoRegistro.save();
-      res.status(200).json({ message: 'Usuario registrado con éxito' });
+      res.status(201).json({ message: 'Usuario registrado con éxito' });
       
     } catch (error) {
       console.error('Error al registrar el usuario:', error);
