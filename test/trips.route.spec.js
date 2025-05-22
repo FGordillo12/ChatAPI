@@ -7,9 +7,9 @@ describe('Pruebas sobre la API', () => {
 
       const metodoPOST = 
       {
-        nombreCompleto: "Usuario Prueba", 
-        email:"usuarioprueba@gmail.com", 
-        password:"Hola",
+        nombreCompleto: "Jose Alfonso", 
+        email:"cuenta99cuenta9@gmail.com", 
+        password:"Alfonso12@",
         type:"Usuario" 
       }
 

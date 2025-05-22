@@ -9,7 +9,7 @@ describe('Pruebas sobre la API', () => {
             const metodoPOST = 
             {
                 email:"cuenta99cuenta9@gmail.com",
-                password:"Hola12345"
+                password:"Alfonso12@"
             };
 
             const response = await supertest(app).post('/api/login').send(metodoPOST);
@@ -23,7 +23,7 @@ describe('Pruebas sobre la API', () => {
             const metodoPOST = 
             {
                 email:"cuenta99cuenta9@gmail.com",
-                password:"Hola12345"
+                password:"contraseñaincorrecta"
             };
             
             const response = await supertest(app).post('/api/login').send(metodoPOST);
