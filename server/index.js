@@ -6,6 +6,8 @@ import connectiondDb from './conexion.js'
 import usuarioRoutes from '../usuariosRoutes/usuariosRoutes.js';
 import cors from 'cors'
 import 'dotenv/config'
+
+
 const PORT = process.env.PORT ?? 3000;
 
 //CREACION DEL SERVIDOR
@@ -56,9 +58,11 @@ app.get("/main", (req, res) => {
 const startServer = async () => {
   try {
     await connectiondDb(); 
+    if (process.env.NODE_ENV !== 'test') {
     server.listen(PORT, () => {
       console.log(`Server running on port http://localhost:${PORT}`);
     });
+  }
   } catch (error) {
     console.error('Error al iniciar el servidor o conectar a la base de datos:', error);
     process.exit(1); 

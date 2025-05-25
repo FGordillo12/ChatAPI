@@ -16,7 +16,7 @@ const registrarusuario = async (req, res) => {
       // Validar si ya existe el usuario con ese correo
       const usuarioExistente = await Usuario.findOne({ email });
       if (usuarioExistente) {
-        return res.status(400).json({
+        return res.status(409).json({
           status: 'error',
           error: [{message:"error4"}],
         });
