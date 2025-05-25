@@ -1,17 +1,17 @@
 import mongoose from "mongoose";
 
 const connectionDb = async () => {
-        const conexion = "mongodb+srv://SanCode:FOpldaLQgqNTxhYh@cluster0.tsmwijl.mongodb.net/sistema_chatapi?retryWrites=true&w=majority&appName=Cluster0"
+  const conexion = process.env.CONNECTION_STRING; 
   try {
-
     const connectDb = await mongoose.connect(conexion);
     console.log(
-      'Connection established',
+      'Connection established:',
       connectDb.connection.name,
-      connectDb.connection.host);
+      connectDb.connection.host
+    );
   } catch (err) {
-    console.log('Fallo en la conexion: ' + err);
-  };
+    console.log('Fallo en la conexion: ' + err);
+  }
 };
+
 export default connectionDb;
-connectionDb();

@@ -2,9 +2,10 @@ import express from "express";
 import logger from "morgan";
 import { Server } from "socket.io";
 import { createServer } from "node:http";
-import database from "./conexion.js";
+import connectiondDb from './conexion.js'
 import usuarioRoutes from '../usuariosRoutes/usuariosRoutes.js';
 import cors from 'cors'
+import 'dotenv/config'
 const PORT = process.env.PORT ?? 3000;
 
 //CREACION DEL SERVIDOR
@@ -52,6 +53,16 @@ app.get("/main", (req, res) => {
 });
   
   
-server.listen(PORT, () => {
-  console.log(`Server running on port http://localhost:${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await connectiondDb(); 
+    server.listen(PORT, () => {
+      console.log(`Server running on port http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error('Error al iniciar el servidor o conectar a la base de datos:', error);
+    process.exit(1); 
+  }
+};
+
+startServer();
