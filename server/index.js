@@ -8,7 +8,7 @@ import cors from 'cors'
 import 'dotenv/config'
 
 
-const PORT = process.env.PORT ?? 3000;
+const PORT = process.env.PORT ?? 5000;
 
 //CREACION DEL SERVIDOR
 export const app = express();
