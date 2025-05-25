@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node --watch ./server/index.js",
+    "start": "node --watch ./server/index.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "keywords": [],
@@ -15,9 +15,10 @@
     "@types/jest": "^29.5.14",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cookieparser": "^0.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
-    "ejs": "^3.1.10",
     "express": "5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.14.0",

@@ -6,7 +6,7 @@ import connectiondDb from './conexion.js'
 import usuarioRoutes from '../usuariosRoutes/usuariosRoutes.js';
 import cors from 'cors'
 import 'dotenv/config'
-
+import cookieParser from "cookie-parser";
 
 const PORT = process.env.PORT ?? 5000;
 
@@ -18,11 +18,6 @@ const io = new Server(server);
 //MOSTRAR EN CONSOLA LAS PETICIONES
 app.use(logger("dev")); 
 app.use(cors());
-
-//SERVIR ARCHIVOS ESTATICOS
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 //Rutas del usuario
 app.use('/api/', usuarioRoutes);
