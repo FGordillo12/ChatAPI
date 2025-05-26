@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const UsuarioSchema = new mongoose.Schema({
-    
+
     nombre: {
         type: String,
         required: true,
@@ -17,11 +17,16 @@ const UsuarioSchema = new mongoose.Schema({
     },
     type: {
         type: String,
-        enum:["Usuario", "Empresa"],
+        enum: ["Usuario", "Empresa"],
         required: true,
     },
-    });
+    verified: {
+        type: Boolean,
+        default: false
+    },
+    verificationToken: String
+});
 
-    //Modelo del esquema
+//Modelo del esquema
 const Usuario = mongoose.model("Usuario", UsuarioSchema);
 export default Usuario;

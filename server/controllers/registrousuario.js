@@ -1,5 +1,7 @@
 import Usuario from '../models/usuarios.js';
 import bcrypt from 'bcrypt'; 
+import { generarTokenVerificacion, enviarCorreoVerificacion } from '../funciones/validarEmail.js';
+import verifyToken from '../middlewares/token.js';
 
 export const registrarUsuario = async (req, res) => {
     try {
@@ -34,15 +36,18 @@ export const registrarUsuario = async (req, res) => {
       // Encriptar la contraseña
       const salt = await bcrypt.genSalt(10);
       const passwordEncriptada = await bcrypt.hash(password, salt);
-  
-      const nuevoRegistro = new Usuario({
+      const token = generarTokenVerificacion();
+      const nuevoRegistro = {
         nombre,
         email,
         password: passwordEncriptada,
         type,
-      });
+        verificationToken: token
+      };
+
+      const sendMessage = await Usuario.create(nuevoRegistro);
+      await enviarCorreoVerificacion(nuevoRegistro, token);
   
-      await nuevoRegistro.save();
       res.status(201).json({ message: 'Usuario registrado con éxito' });
       
     } catch (error) {
@@ -50,4 +55,3 @@ export const registrarUsuario = async (req, res) => {
       res.status(500).json({ message: 'Error al registrar el usuario' });
     }
   };
-  
