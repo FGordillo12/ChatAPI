@@ -1,13 +1,13 @@
 import Usuario from '../models/usuarios.js';
 import bcrypt from 'bcrypt'; 
 
-const registrarusuario = async (req, res) => {
+export const registrarUsuario = async (req, res) => {
     try {
-      const { nombreCompleto, email, password, type } = req.body;
+      const { nombre, email, password, type } = req.body;
   
       //Validar que el nombre solo contenga caracteres alfabeticos
       const regexNombre = /^[a-zA-Z\s]+$/;
-      if (!regexNombre.test(nombreCompleto)) {
+      if (!regexNombre.test(nombre)) {
         return res.status(400).json({
           status: 'error',
           error: [{message:"error1"}],
@@ -36,7 +36,7 @@ const registrarusuario = async (req, res) => {
       const passwordEncriptada = await bcrypt.hash(password, salt);
   
       const nuevoRegistro = new Usuario({
-        nombreCompleto,
+        nombre,
         email,
         password: passwordEncriptada,
         type,
@@ -51,6 +51,3 @@ const registrarusuario = async (req, res) => {
     }
   };
   
-
-export { registrarusuario };
-

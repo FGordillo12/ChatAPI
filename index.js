@@ -2,16 +2,15 @@ import express from "express";
 import logger from "morgan";
 import { Server } from "socket.io";
 import { createServer } from "node:http";
-import connectiondDb from './server/conexion.js'
+import connectiondDb from './server/database/conexion.js'
 import cors from 'cors'
 import 'dotenv/config'
 import cookieParser from "cookie-parser";
-import { routerUsuarios } from "./usuariosRoutes/usuariosRoutes.js";
-import { routerPagina } from "./usuariosRoutes/paginaRoutes.js";
+import { routerUsuarios } from "./server/routes/usuariosRoutes.js";
+import { routerPagina } from "./server/routes/paginaRoutes.js";
 const PORT = process.env.PORT;
 const corsOptions = {
       origin: 'http://localhost:5173',
-      methods: 'GET,POST',
       allowedHeaders: 'Content-Type,Authorization',
       credentials: true
 };

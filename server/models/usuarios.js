@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 
 const UsuarioSchema = new mongoose.Schema({
-    nombreCompleto: {
+    
+    nombre: {
         type: String,
         required: true,
     },

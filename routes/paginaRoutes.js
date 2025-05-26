@@ -1,7 +1,7 @@
 import express from 'express';
-import { registrarusuario } from '../server/registrousuario.js';
-import { iniciarSesion } from '../server/sesionusuario.js';
-import verifyToken from '../server/middlewares/token.js';
+import { registrarusuario } from '../controllers/registrousuario.js';
+import { iniciarSesion } from '../controllers/sesionusuario.js';
+import verifyToken from '../middlewares/token.js';
 
 export const routerPagina = express.Router();
 
@@ -17,13 +17,18 @@ routerPagina.get('/main-page', verifyToken, (req, res) => {
   });
 });
 
+routerPagina.get('/perfil', verifyToken, (req, res) => {
+  res.status(200).json({
+    usuario: req.usuario
+  });
+});
 
 routerPagina.post('/logout', (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
-    secure: false, // ponlo en true si usas HTTPS
-    sameSite: 'Lax', // o 'Strict' o 'None' si necesitas
-    path: '/' // asegúrate que coincida con la cookie original
+    secure: false, 
+    sameSite: 'Lax',
+    path: '/' 
   });
 
   return res.status(200).json({ message: 'Sesión cerrada correctamente' });
