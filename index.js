@@ -2,22 +2,30 @@ import express from "express";
 import logger from "morgan";
 import { Server } from "socket.io";
 import { createServer } from "node:http";
-import connectiondDb from './conexion.js'
-import usuarioRoutes from '../usuariosRoutes/usuariosRoutes.js';
+import connectiondDb from './server/conexion.js'
+import usuarioRoutes from './usuariosRoutes/usuariosRoutes.js';
 import cors from 'cors'
 import 'dotenv/config'
 import cookieParser from "cookie-parser";
 
-const PORT = process.env.PORT ?? 5000;
-
+const PORT = process.env.PORT;
+const corsOptions = {
+      origin: 'http://localhost:5173',
+      methods: 'GET,POST',
+      allowedHeaders: 'Content-Type,Authorization',
+      credentials: true
+    };
 //CREACION DEL SERVIDOR
 export const app = express();
+app.use(cookieParser());
+app.use(express.json());
+app.use(cors(corsOptions));
+
 const server = createServer(app);
 const io = new Server(server);
-
 //MOSTRAR EN CONSOLA LAS PETICIONES
 app.use(logger("dev")); 
-app.use(cors());
+
 
 //Rutas del usuario
 app.use('/api/', usuarioRoutes);
@@ -35,21 +43,6 @@ io.on("connection", (socket) => {
   });
 });
 
-app.set("view engine", "ejs");
-
-app.get("/", (req, res) => {
-  res.render("registro");
-});
-
-app.get("/login", (req, res) => {
-  res.render("login");
-});
-
-app.get("/main", (req, res) => {
-    res.render("main");
-});
-  
-  
 const startServer = async () => {
   try {
     await connectiondDb(); 
