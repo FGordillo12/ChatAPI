@@ -1,6 +1,6 @@
 import supertest from 'supertest';
 import { app } from '..';
-
+import Usuario from '../server/models/usuarios';
 describe('Pruebas sobre la api/login', () => {
    
   beforeAll(async () => {
@@ -9,8 +9,10 @@ describe('Pruebas sobre la api/login', () => {
       nombre: "Prueba Uno",
       email: "pruebauno@gmail.com",
       password: "Hola12345*",
-      type: "Usuario"
+      type: "Usuario",
+      verified: true
     });
+    await Usuario.updateOne({ email: "pruebauno@gmail.com" }, { verified: true });
   });
 
   describe('POST/api/login', () => {

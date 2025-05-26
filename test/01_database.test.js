@@ -2,7 +2,6 @@ import 'dotenv/config';
 import mongoose from 'mongoose';
 
 describe('Conexion a la base de datos', () => {
-
   beforeAll(async () => {
     await mongoose.connect(process.env.CONNECTION_STRING);
   });

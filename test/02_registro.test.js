@@ -20,6 +20,8 @@ describe('Pruebas sobre la API/Registro', () => {
 
     })
   })
+
+
 describe('POST /api/registro', () => {
    it('No debe registrar usuario con email ya existente', async () => {
     const response = await supertest(app).post('/api/registro').send({
@@ -33,6 +35,4 @@ describe('POST /api/registro', () => {
 
 })
   
-
-
 });
