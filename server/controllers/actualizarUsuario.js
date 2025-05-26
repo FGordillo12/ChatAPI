@@ -1,24 +1,41 @@
+import jwt from 'jsonwebtoken';
 import Usuario from '../models/usuarios.js';
 
 export const actualizarUsuario = async (req, res) => {
-  const userId = req.usuario.id; 
-  const { nombreCompleto, email } = req.body;
+  const userId = req.usuario.id;
+  const { nombre, email } = req.body;
 
   try {
-    const usuarioActualizado = await Usuario.findByIdAndUpdate(
+    const usuario = await Usuario.findByIdAndUpdate(
       userId,
-      { nombreCompleto, email },
-      { new: true } 
+      { nombre, email },
+      { new: true }
     );
 
-    if (!usuarioActualizado) {
+    if (!usuario) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
     }
 
-    res.status(200).json({ message: 'Perfil actualizado correctamente', usuario: usuarioActualizado });
+     const token = jwt.sign(
+          { id: usuario._id, nombre: usuario.nombre,  email: usuario.email, type: usuario.type },
+          process.env.JWT_TOKEN,
+          { expiresIn: "1h" }
+        );
+    
+        res.cookie('token', token, {
+          httpOnly: true,
+          secure: false,       
+          sameSite: 'lax',      
+          maxAge: 3600000,
+        });
+        res.status(200).json({
+          message: "Actualizacion exitosa",
+         
+        });
+
+    res.status(200).json({ mensaje: 'Perfil actualizado' });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Error al actualizar el perfil' });
   }
 };
-

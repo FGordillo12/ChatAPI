@@ -10,7 +10,6 @@ const verifyToken = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_TOKEN);
     req.usuario = decoded; 
-    console.log("Cookies recibidas:", req.cookies);
     next();
   } catch (error) {
     return res.status(403).json({ message: "Token inválido" });
