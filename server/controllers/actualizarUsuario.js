@@ -32,10 +32,10 @@ export const actualizarUsuario = async (req, res) => {
           message: "Actualizacion exitosa",
          
         });
-
-    res.status(200).json({ mensaje: 'Perfil actualizado' });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Error al actualizar el perfil' });
+    if (!res.headersSent) {
+      res.status(500).json({ message: 'Error al actualizar el perfil' });
+    }
   }
 };

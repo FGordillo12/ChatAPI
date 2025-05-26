@@ -2,8 +2,7 @@ import supertest from 'supertest';
 import { app } from '..';
 
 describe('Pruebas sobre la api/login', () => {
-
-  
+   
   beforeAll(async () => {
     // Intenta crear el usuario antes de la prueba de login
     await supertest(app).post('/api/registro').send({
