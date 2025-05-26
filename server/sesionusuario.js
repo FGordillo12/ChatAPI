@@ -18,7 +18,7 @@ const iniciarSesion = async (req, res) => {
 
     // ✅ Generar el token JWT
     const token = jwt.sign(
-      { id: usuario._id, email: usuario.email, type: usuario.type },
+      { id: usuario._id, nombre: usuario.nombreCompleto,  email: usuario.email, type: usuario.type },
       process.env.JWT_TOKEN,
       { expiresIn: "1h" }
     );

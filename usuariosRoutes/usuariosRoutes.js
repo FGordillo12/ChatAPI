@@ -3,16 +3,13 @@ import { registrarusuario } from '../server/registrousuario.js';
 import { iniciarSesion } from '../server/sesionusuario.js';
 import verifyToken from '../server/middlewares/token.js';
 
-const router = express.Router();
+export const routerUsuarios = express.Router();
 
-router.post('/registro', registrarusuario);
-router.post('/login', iniciarSesion);
-router.get('/chat', verifyToken, (req, res) => {
-  res.status(200).json({
-    usuario: req.usuario
-  });
-  
-});
+routerUsuarios.post('/registro', registrarusuario);
+routerUsuarios.post('/login', iniciarSesion);
 
-export default router;
+
+
+
+
 
