@@ -4,11 +4,17 @@ import { iniciarSesion } from '../controllers/sesionusuario.js';
 import { actualizarUsuario } from '../controllers/actualizarUsuario.js';
 import verifyToken from '../middlewares/token.js';
 import { verificarCuenta } from '../controllers/verificarCuenta.js';
+import { restablecerPassword, enviarCorreoPassword } from '../controllers/recuperarPassword.js';
 export const routerUsuarios = express.Router();
 
 routerUsuarios.post('/registro', registrarUsuario);
+
 routerUsuarios.post('/login', iniciarSesion);
+
 routerUsuarios.patch('/perfil',verifyToken,actualizarUsuario)
+
+routerUsuarios.post('/recuperar_password',enviarCorreoPassword)
+routerUsuarios.patch('/restablecer_password/:token', restablecerPassword);
 
 routerUsuarios.get('/validacion/:token', verificarCuenta);
 

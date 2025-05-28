@@ -24,7 +24,15 @@ const UsuarioSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    verificationToken: String
+    verificationToken: {
+       type: String,
+    },
+    resetPasswordToken: {
+       type: String,
+    },
+    resetPasswordExpires: {
+       type: String,
+    },
 });
 
 //Modelo del esquema
