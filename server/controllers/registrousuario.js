@@ -1,7 +1,6 @@
 import Usuario from '../models/usuarios.js';
 import bcrypt from 'bcrypt'; 
 import { generarTokenVerificacion, enviarCorreoVerificacion } from '../funciones/validarEmail.js';
-import verifyToken from '../middlewares/token.js';
 
 export const registrarUsuario = async (req, res) => {
     try {
