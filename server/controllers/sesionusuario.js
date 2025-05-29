@@ -21,7 +21,7 @@ export const iniciarSesion = async (req, res) => {
       return res.status(401).json({ message: "Credenciales inválidas" });
     }
 
-    // ✅ Generar el token JWT
+    // Generar el token JWT
     const token = jwt.sign(
       { id: usuario._id, nombre: usuario.nombre, email: usuario.email, type: usuario.type },
       process.env.JWT_TOKEN,
@@ -40,8 +40,10 @@ export const iniciarSesion = async (req, res) => {
         id: usuario._id,
         nombre: usuario.nombre,
         email: usuario.email,
-        type: usuario.type
-      }
+        type: usuario.type,
+        rol: usuario?.type, 
+      },
+      token
     });
 
   } catch (error) {

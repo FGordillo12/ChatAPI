@@ -42,15 +42,16 @@ app.use('/api/', routerPagina);
 io.on("connection", (socket) => {
   console.log("Un usuario se ha conectado");
 
-  socket.on("chat message", (msg) => {  
-    console.log("mensaje: ", msg);
-    io.emit("chat message", msg); // emite a todos los clientes
+  socket.on("chat message", ({ mensaje, nombre, rol }) => {
+    const msg = { mensaje, nombre, rol };
+    io.emit("chat message", msg); // envía a todos
   });
 
   socket.on("disconnect", () => {
     console.log("Un usuario se ha desconectado");
   });
 });
+
 
 
 const startServer = async () => {
