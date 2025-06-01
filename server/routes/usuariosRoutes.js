@@ -5,6 +5,7 @@ import { actualizarUsuario } from '../controllers/actualizarUsuario.js';
 import verifyToken from '../middlewares/token.js';
 import { verificarCuenta } from '../controllers/verificarCuenta.js';
 import { restablecerPassword, enviarCorreoPassword } from '../controllers/recuperarPassword.js';
+import { getUsuarios, getEmpresas } from '../controllers/consultarUsuarios.js';
 export const routerUsuarios = express.Router();
 
 routerUsuarios.post('/registro', registrarUsuario);
@@ -18,5 +19,5 @@ routerUsuarios.patch('/restablecer_password/:token', restablecerPassword);
 
 routerUsuarios.get('/validacion/:token', verificarCuenta);
 
-
-
+routerUsuarios.get('/usuarios', getUsuarios);
+routerUsuarios.get('/empresas', getEmpresas);

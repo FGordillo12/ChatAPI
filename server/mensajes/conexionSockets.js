@@ -5,48 +5,47 @@ export function setupSocket(server) {
     cors: {
       origin: 'http://localhost:5173',
       methods: ['GET', 'POST', 'PATCH', 'PUT'],
-      credentials: true
-    }
+      credentials: true,
+    },
   });
 
+  // Almacenar todos los mensajes (públicos y privados)
   const mensajes = [];
-  const empresasConectadas = new Map(); // socket.id -> empresa info
+  const usuarios = new Map();
 
   io.on("connection", (socket) => {
-    console.log("Un usuario se ha conectado");
+    console.log("Usuario conectado:", socket.id);
 
-    socket.emit("previous messages", mensajes);
-
-    socket.on("identify", (userInfo) => {
-      if (userInfo.type === "Empresa") {
-        empresasConectadas.set(socket.id, userInfo);
-        console.log(`Empresa conectada: ${userInfo.nombre}`);
-      } else if (userInfo.type === "Usuario") {
-        console.log(`Usuario conectado: ${userInfo.nombre}`);
-      }
+    socket.on("identify", ({ nombre, type }) => {
+      socket.data = { nombre, type };
+      usuarios.set(nombre, socket.id); // Guardar su socket.id por nombre
+      console.log(`Identificado: ${nombre} (${type})`);
     });
 
-    socket.on("chat message", ({ mensaje, nombre, rol }) => {
-      const msg = { mensaje, nombre, rol };
+    // Manejo de mensajes privados
+    socket.on("new chat", (mensajeObj) => {
+      const msg = {
+        ...mensajeObj,
+        timestamp: new Date().toISOString(),
+        id: Date.now().toString()
+      };
       mensajes.push(msg);
-      io.emit("chat message", msg);
+      console.log("Mensaje privado guardado:", msg);
+
+
+      const destinatarioSocketId = usuarios.get(mensajeObj.destinatario);
+      console.log(destinatarioSocketId);
+
+      if (destinatarioSocketId) {
+        io.to(destinatarioSocketId).emit("new chat", msg);
+      }
+
+
     });
 
-    socket.on("get empresas conectadas", () => {
-      // Solo usuarios pueden pedir esta info
-      const user = socket.handshake.auth?.userInfo;
-      if (user?.type === "Usuario" || !user) {
-        const listaEmpresas = Array.from(empresasConectadas.values());
-        socket.emit("empresas conectadas", listaEmpresas);
-      }
-    });
 
     socket.on("disconnect", () => {
-      if (empresasConectadas.has(socket.id)) {
-        console.log(`Empresa desconectada: ${empresasConectadas.get(socket.id).nombre}`);
-        empresasConectadas.delete(socket.id);
-      }
-      console.log("Un usuario se ha desconectado");
+      console.log("Usuario desconectado:", socket.id);
     });
   });
 }
