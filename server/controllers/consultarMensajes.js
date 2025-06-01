@@ -19,6 +19,27 @@ export const buscarMensaje = async (req, res) => {
 };
 
 
+export const actualizarMensajes =  async (req, res) => {
+  const { id } = req.params;
+  const { mensaje } = req.body;
+  try {
+    const mensajeActualizado = await Mensaje.findByIdAndUpdate(id, { mensaje }, { new: true });// Broadcast
+    res.json({ mensaje: mensajeActualizado });
+  } catch (err) {
+    res.status(500).json({ error: 'Error al editar el mensaje' });
+  }
+};
+
+export const eliminarMensajes = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Mensaje.findByIdAndDelete(id);
+    res.json({ mensaje: 'Mensaje eliminado' });
+  } catch (err) {
+    res.status(500).json({ error: 'Error al eliminar el mensaje' });
+  }
+};
+
 export const consultarInfoMensajes = async (req, res) => {
   const { usuario1, usuario2 } = req.params;
   
@@ -62,3 +83,4 @@ export const consultarInfoMensajes = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener mensajes' });
   }
 };
+
