@@ -6,6 +6,8 @@ import verifyToken from '../middlewares/token.js';
 import { verificarCuenta } from '../controllers/verificarCuenta.js';
 import { restablecerPassword, enviarCorreoPassword } from '../controllers/recuperarPassword.js';
 import { getUsuarios, getEmpresas } from '../controllers/consultarUsuarios.js';
+import { buscarMensaje } from '../controllers/consultarMensajes.js';
+
 export const routerUsuarios = express.Router();
 
 routerUsuarios.post('/registro', registrarUsuario);
@@ -21,3 +23,6 @@ routerUsuarios.get('/validacion/:token', verificarCuenta);
 
 routerUsuarios.get('/usuarios', getUsuarios);
 routerUsuarios.get('/empresas', getEmpresas);
+
+routerUsuarios.get('/mensajes/:usuario1/:usuario2', buscarMensaje);
+

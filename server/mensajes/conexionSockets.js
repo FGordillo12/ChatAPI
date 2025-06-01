@@ -1,4 +1,5 @@
 import { Server } from "socket.io";
+import Mensaje from "../models/mensajes.js" // Ajusta la ruta según tu estructura
 
 export function setupSocket(server) {
   const io = new Server(server, {
@@ -9,10 +10,8 @@ export function setupSocket(server) {
     },
   });
 
-  const mensajes = [];
   const usuarios = new Map(); // nombre => { socketId, conectado }
 
-  // Función auxiliar para emitir la lista actualizada de usuarios
   function emitirListaUsuarios() {
     const usuariosFiltrados = Array.from(usuarios.entries())
       .filter(([usuarioId, info]) => info.conectado && info.type === 'Usuario')
@@ -22,32 +21,37 @@ export function setupSocket(server) {
       }));
 
     io.emit("usuarios conectados", usuariosFiltrados);
-
     console.log(usuariosFiltrados);
   }
 
   io.on("connection", (socket) => {
-    console.log("Usuario conectado:", socket.id);
-
     socket.on("identify", ({ usuarioId, type }) => {
       socket.data = { usuarioId, type };
       usuarios.set(usuarioId, { socketId: socket.id, conectado: true, type });
       console.log(`Identificado: ${usuarioId} (${type})`);
-      emitirListaUsuarios(); // Enviar a todos la lista de usuarios conectados
+      emitirListaUsuarios();
     });
 
-    socket.on("new chat", (mensajeObj) => {
+    socket.on("new chat", async (mensajeObj) => {
       const msg = {
         ...mensajeObj,
-        timestamp: new Date().toISOString(),
+        timestamp: new Date(),
         id: Date.now().toString(),
       };
-      mensajes.push(msg);
-      console.log("Mensaje privado guardado:", msg);
 
-      const destinatario = usuarios.get(mensajeObj.destinatario);
-      if (destinatario?.socketId) {
-        io.to(destinatario.socketId).emit("new chat", msg);
+      try {
+        // Guardar en MongoDB
+        const mensajeGuardado = new Mensaje(msg);
+        await mensajeGuardado.save();
+        console.log("Mensaje guardado en DB:", mensajeGuardado);
+
+        // Emitir a destinatario si está conectado
+        const destinatario = usuarios.get(mensajeObj.destinatario);
+        if (destinatario?.socketId) {
+          io.to(destinatario.socketId).emit("new chat", msg);
+        }
+      } catch (error) {
+        console.error("Error guardando mensaje:", error);
       }
     });
 
