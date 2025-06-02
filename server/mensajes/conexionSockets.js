@@ -34,26 +34,55 @@ export function setupSocket(server) {
 
     socket.on("new chat", async (mensajeObj) => {
       const msg = {
-        ...mensajeObj,
+        remitente: mensajeObj.remitente,
+        destinatario: mensajeObj.destinatario,
+        mensaje: mensajeObj.mensaje || "",
         timestamp: new Date(),
         id: Date.now().toString(),
       };
 
+      if (mensajeObj.archivo?.datos) {
+        msg.archivo = {
+          datos: Buffer.from(mensajeObj.archivo.datos, 'base64'),
+          tipo: mensajeObj.archivo.tipo,
+          nombre: mensajeObj.archivo.nombre
+        };
+      }
       try {
-        // Guardar en MongoDB
         const mensajeGuardado = new Mensaje(msg);
         await mensajeGuardado.save();
         console.log("Mensaje guardado en DB:", mensajeGuardado);
 
-        // Emitir a destinatario si está conectado
         const destinatario = usuarios.get(mensajeObj.destinatario);
         if (destinatario?.socketId) {
-          io.to(destinatario.socketId).emit("new chat", msg);
+          io.to(destinatario.socketId).emit("new chat", {
+            ...msg,
+            archivo: {
+              datos: mensajeObj.archivo?.datos, // Reenviamos base64 al cliente receptor
+              tipo: mensajeObj.archivo?.tipo,
+              nombre: mensajeObj.archivo?.nombre
+            }
+          });
         }
       } catch (error) {
         console.error("Error guardando mensaje:", error);
       }
     });
+    //   try {
+    //     // Guardar en MongoDB
+    //     const mensajeGuardado = new Mensaje(msg);
+    //     await mensajeGuardado.save();
+    //     console.log("Mensaje guardado en DB:", mensajeGuardado);
+
+    //     // Emitir a destinatario si está conectado
+    //     const destinatario = usuarios.get(mensajeObj.destinatario);
+    //     if (destinatario?.socketId) {
+    //       io.to(destinatario.socketId).emit("new chat", msg);
+    //     }
+    //   } catch (error) {
+    //     console.error("Error guardando mensaje:", error);
+    //   }
+    // });
 
     socket.on("disconnect", () => {
       console.log("Usuario desconectado:", socket.id);

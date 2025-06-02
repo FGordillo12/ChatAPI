@@ -1,5 +1,6 @@
 import PDFDocument from 'pdfkit';
 import fs from 'fs';
+imp
 
 const productos = { 
   Arroz: { cantidad: 5, precio: 2.50 }, 
