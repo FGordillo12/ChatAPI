@@ -21,6 +21,17 @@ const mensajeSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  archivo: {
+    datos: {
+      type: Buffer // 👈 Muy importante para guardar binarios
+    },
+    tipo: {
+      type: String
+    },
+    nombre: {
+      type: String
+    }
+  }
 });
 
 const Mensaje = mongoose.model("Mensaje", mensajeSchema);
