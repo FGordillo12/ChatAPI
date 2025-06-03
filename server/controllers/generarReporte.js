@@ -124,6 +124,7 @@ export const generarReporteMensajes = async (req, res) => {
 
     // Devolver el archivo al cliente
     res.status(201).json({
+      "message":"Reporte Creado con Éxito",
       "nombre":nombreArchivo, 
       "ruta": rutaArchivo
     })
