@@ -19,7 +19,7 @@ export const buscarMensaje = async (req, res) => {
 };
 
 
-export const actualizarMensajes =  async (req, res) => {
+export const actualizarMensajes = async (req, res) => {
   const { id } = req.params;
   const { mensaje } = req.body;
   try {
@@ -42,7 +42,7 @@ export const eliminarMensajes = async (req, res) => {
 
 export const consultarInfoMensajes = async (req, res) => {
   const { usuario1, usuario2 } = req.params;
-  
+
   try {
     const mensajes = await Mensaje.find({
       $or: [
@@ -76,7 +76,13 @@ export const consultarInfoMensajes = async (req, res) => {
       });
     });
 
-    res.json(productos);
+    const productosFormateados = Object.entries(productos).map(([nombre, cantidad]) => ({
+      nombre,
+      cantidad,
+    }));
+    res.json(productosFormateados);
+
+
 
   } catch (error) {
     console.error(error);

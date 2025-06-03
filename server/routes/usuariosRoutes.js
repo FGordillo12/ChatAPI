@@ -6,7 +6,8 @@ import verifyToken from '../middlewares/token.js';
 import { verificarCuenta } from '../controllers/verificarCuenta.js';
 import { restablecerPassword, enviarCorreoPassword } from '../controllers/recuperarPassword.js';
 import { getUsuarios, getEmpresas } from '../controllers/consultarUsuarios.js';
-import { buscarMensaje,consultarInfoMensajes , actualizarMensajes, eliminarMensajes} from '../controllers/consultarMensajes.js';
+import { buscarMensaje, actualizarMensajes, eliminarMensajes, consultarInfoMensajes} from '../controllers/consultarMensajes.js';
+import { generarReporteMensajes } from '../controllers/generarReporte.js';
 
 export const routerUsuarios = express.Router();
 
@@ -30,3 +31,6 @@ routerUsuarios.get('/estadisticas/:usuario1/:usuario2', consultarInfoMensajes);
 routerUsuarios.patch('/mensajes/:id', actualizarMensajes);
 routerUsuarios.delete('/mensajes/:id', eliminarMensajes);
 
+//REPORTES
+
+routerUsuarios.get('/reportes/:usuario1/:usuario2', generarReporteMensajes);
