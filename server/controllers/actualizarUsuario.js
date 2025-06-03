@@ -30,8 +30,12 @@ export const actualizarUsuario = async (req, res) => {
         });
         res.status(200).json({
           message: "Actualizacion exitosa",
-         
+          nombre: usuario.nombre,
+          email: usuario.email,
+          type: usuario.type
         });
+         
+
   } catch (err) {
     console.error(err);
     if (!res.headersSent) {
