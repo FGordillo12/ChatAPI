@@ -10,8 +10,7 @@ const mensajeSchema = new mongoose.Schema({
     required: true
   },
   mensaje: {
-    type: String,
-    required: true
+    type: String  
   },
   timestamp: {
     type: Date,
