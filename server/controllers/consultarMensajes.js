@@ -76,7 +76,18 @@ export const consultarInfoMensajes = async (req, res) => {
       });
     });
 
-    res.json(productos);
+
+    //Agregamos requisitos de postman
+    const cantidadMensajes = mensajes.length;
+    const ultimoMensaje = mensajes.length > 0
+      ? mensajes[mensajes.length - 1]
+      : { remitente: "", destinatario: "", mensaje: "" };
+
+    res.json({
+      cantidadMensajes,
+      ultimoMensaje,
+      productos
+    });
 
   } catch (error) {
     console.error(error);
