@@ -33,7 +33,7 @@ describe('Pruebas sobre la api/perfil', () => {
 
       const response = await supertest(app)
         .patch('/api/perfil')
-        .set('Cookie', cookies) // 👈 Importante: adjuntar cookie
+        .set('Cookie', cookies) 
         .send(metodoPATCH);
 
       expect(response.status).toBe(200);
