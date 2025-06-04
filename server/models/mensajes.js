@@ -12,10 +12,6 @@ const mensajeSchema = new mongoose.Schema({
   mensaje: {
     type: String  
   },
-  timestamp: {
-    type: Date,
-    required: true
-  },
   id: {
     type: String,
     required: false
@@ -30,7 +26,11 @@ const mensajeSchema = new mongoose.Schema({
     nombre: {
       type: String
     }
-  }
+  },
+  timestamp: {
+    type: Date,
+    required: true
+  },
 });
 
 const Mensaje = mongoose.model("Mensaje", mensajeSchema);
