@@ -1,5 +1,5 @@
 import supertest from 'supertest';
-import { app } from '..';
+import { app } from '../..';
 
 describe('Pruebas sobre la API/Registro', () => {
   describe('POST /api/registro', () => {

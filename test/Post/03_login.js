@@ -1,6 +1,6 @@
 import supertest from 'supertest';
-import { app } from '..';
-import Usuario from '../server/models/usuarios';
+import { app } from '../..';
+import Usuario from '../../server/models/usuarios';
 describe('Pruebas sobre la api/login', () => {
    
   beforeAll(async () => {
