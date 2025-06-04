@@ -31,20 +31,23 @@ export const mensajesPorDia = async (req, res) => {
   try {
     const resultados = await Mensaje.aggregate([
       {
-        // Convertimos la fecha de creación a solo el día (sin hora)
+        $match: {
+          timestamp: { $type: "date" } // Asegura que el campo tenga fecha válida
+        }
+      },
+      {
         $group: {
           _id: {
-            $dateToString: { format: "%Y-%m-%d", date: "$createdAt" }
+            $dateToString: { format: "%Y-%m-%d", date: "$timestamp" }
           },
           cantidadMensajes: { $sum: 1 }
         }
       },
       {
-        $sort: { _id: 1 } // Ordena por fecha ascendente
+        $sort: { _id: 1 }
       }
     ]);
 
-    // Cambiar _id por fecha para mayor claridad
     const mensajesPorDia = resultados.map(d => ({
       fecha: d._id,
       cantidadMensajes: d.cantidadMensajes
@@ -57,3 +60,4 @@ export const mensajesPorDia = async (req, res) => {
     return res.status(500).json({ message: "Error del servidor", error: err.message });
   }
 };
+
