@@ -1,6 +1,6 @@
 import Mensaje from "../models/mensajes.js";
 import Usuario from "../models/usuarios.js";
-
+import mongoose from "mongoose";
 
 //Consulta en la cantidad de mensajes escritos por un usuario en la base de datos
 export const cantidadMensajesUsuarios = async (req, res) => {
@@ -63,6 +63,7 @@ export const mensajesPorDia = async (req, res) => {
   }
 };
 
+//Consulta la cantidad productos actualmente pedidos por todos los usuarios
 export const consultarProductos = async (req, res) => {
   try {
     const mensajes = await Mensaje.find(); // orden ascendente por fecha
@@ -105,4 +106,39 @@ export const consultarProductos = async (req, res) => {
   }
 };
 
+//Consulta la cantidad de mensajes por dia de un usuario especifico con el {id}
+export const mensajesPorDiaUsuario = async (req, res) => {
+  try {
+    const { remitenteId } = req.params;
 
+    if (!remitenteId || typeof remitenteId !== 'string') {
+      return res.status(400).json({ message: "ID de remitente no válido" });
+    }
+
+    const resultados = await Mensaje.aggregate([
+      {
+        $match: {
+          remitente: remitenteId,
+          timestamp: { $type: "date" }
+        }
+      },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m-%d", date: "$timestamp" } },
+          cantidadMensajes: { $sum: 1 }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+
+    const mensajesPorDia = resultados.map(d => ({
+      fecha: d._id,
+      cantidadMensajes: d.cantidadMensajes
+    }));
+
+    return res.status(200).json(mensajesPorDia);
+  } catch (err) {
+    console.error("Error al contar mensajes por día:", err);
+    return res.status(500).json({ message: "Error del servidor", error: err.message });
+  }
+};
