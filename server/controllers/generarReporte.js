@@ -1,3 +1,4 @@
+//Importaciones necesarias para generar PDF y manejar archivos
 import PDFDocument from 'pdfkit';
 import fs from 'fs';
 import path from 'path';
@@ -6,7 +7,7 @@ import Mensaje from "../models/mensajes.js";
 // Función para generar el PDF con los productos
 function generarReportePDF(productos, nombreArchivo) {
   const doc = new PDFDocument({ margin: 50 });
-  const filePath = path.resolve(`./reportes/${nombreArchivo}`);
+  const filePath = path.resolve(`./reportes/${nombreArchivo}`); //Ruta donde se guardará el PDF
   doc.pipe(fs.createWriteStream(filePath));
 
   const fechaPedido = new Date().toLocaleDateString();
@@ -34,15 +35,15 @@ function generarReportePDF(productos, nombreArchivo) {
 
   let y = 210;
   let totalGeneral = 0;
-
+  // Agregar filas por cada producto
   Object.entries(productos).forEach(([producto, datos], index) => {
     const total = datos.cantidad * datos.precio;
     totalGeneral += total;
-
+    //Alterar el color de cada fila 
     doc.fillColor(index % 2 === 0 ? '#f8f9fa' : '#ffffff')
        .rect(50, y, doc.page.width - 100, 25)
        .fill();
-
+    // Añadir texto a la fila
     doc.fillColor('#000000')
        .fontSize(10)
        .font('Helvetica')
@@ -66,14 +67,14 @@ function generarReportePDF(productos, nombreArchivo) {
   doc.fillColor('#7f8c8d').fontSize(8)
      .text('© 2023 Full Hacks Corporation - Todos los derechos reservados', 
            50, doc.page.height - 50, { align: 'center' });
-
+  // Linea de separacion en pie de pagina
   doc.strokeColor('#bdc3c7')
      .lineWidth(1)
      .moveTo(50, doc.page.height - 60)
      .lineTo(doc.page.width - 50, doc.page.height - 60)
      .stroke();
 
-  doc.end();
+  doc.end(); //Finaliza el documento PDF
   return filePath;
 }
 
@@ -81,21 +82,21 @@ function generarReportePDF(productos, nombreArchivo) {
 export const generarReporteMensajes = async (req, res) => {
   const { usuario1, usuario2 } = req.params;
 
-  try {
+  try { //Buscar mensajes entre los dos usuarios
     const mensajes = await Mensaje.find({
       $or: [
         { remitente: usuario1, destinatario: usuario2 },
         { remitente: usuario2, destinatario: usuario1 }
       ]
     }).sort({ timestamp: 1 });
-
+    //Extraer el texto de los mensajes
     const mensajesTexto = mensajes
       .filter(m => m.mensaje)
       .map(m => m.mensaje);
-
+    //Filtrar los mensajes que contienen productos
     const mensajesProductos = mensajesTexto.filter(text => /[a-zA-Z]+:\s*\d+/.test(text));
     const productos = {};
-
+    // Procesar los mensajes para contar productos
     mensajesProductos.forEach(mensaje => {
       const items = mensaje.split(',');
       items.forEach(item => {
@@ -119,19 +120,20 @@ export const generarReporteMensajes = async (req, res) => {
       };
     });
 
+    // Generar el PDF con los productos
     const nombreArchivo = `reporte_${usuario1}_y_${usuario2}.pdf`;
     const rutaArchivo = generarReportePDF(productosPDF, nombreArchivo);
 
-    // Devolver el archivo al cliente
+    // Enviar el archivo 
     res.status(201).json({
       "message":"Reporte Creado con Éxito",
       "nombre":nombreArchivo, 
       "ruta": rutaArchivo
     })
       
-     res.status(500).json({ error: 'Error al enviar el reporte PDF' });
+     res.status(500).json({ error: 'Error al enviar el reporte PDF' }); //Error al enviar el reporte PDF
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al generar el reporte de mensajes' });
+    res.status(500).json({ error: 'Error al generar el reporte de mensajes' }); //Error al generar el reporte de mensajes
   }
 };

@@ -1,7 +1,8 @@
+//Importaciones para encriptar contraseñas, enviar correos e importar el modelo de usuario
 import Usuario from '../models/usuarios.js';
 import bcrypt from 'bcrypt'; 
 import { generarTokenVerificacion, enviarCorreoVerificacion } from '../funciones/validarEmail.js';
-
+// Función para registrar un nuevo usuario
 export const registrarUsuario = async (req, res) => {
     try {
       const { nombre, email, password, type } = req.body;
@@ -43,13 +44,13 @@ export const registrarUsuario = async (req, res) => {
         type,
         verificationToken: token
       };
-
-      const sendMessage = await Usuario.create(nuevoRegistro);
-      await enviarCorreoVerificacion(nuevoRegistro, token);
-  
+      
+      const sendMessage = await Usuario.create(nuevoRegistro); //Guardar el nuevo usuario en la base de datos
+      await enviarCorreoVerificacion(nuevoRegistro, token); //Enviar correo de verificación
+      // Respuesta exitosa
       res.status(201).json({ message: 'Usuario registrado con éxito' });
       
-    } catch (error) {
+    } catch (error) { //Captura de errores y mostrar mensaje de error
       console.error('Error al registrar el usuario:', error);
       res.status(500).json({ message: 'Error al registrar el usuario' });
     }

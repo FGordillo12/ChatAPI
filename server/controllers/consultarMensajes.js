@@ -1,16 +1,20 @@
+//importacion de los modelos
 import Mensaje from "../models/mensajes.js";
 
+// Funcion encargada de buscar mensajes entre dos usuarios
 export const buscarMensaje = async (req, res) => {
-  const { usuario1, usuario2 } = req.params;
+  const { usuario1, usuario2 } = req.params; //usuarios que estan chateando desde la URL
 
+  // Validaciones de los datos recibidos
   try {
     const mensajes = await Mensaje.find({
       $or: [
         { remitente: usuario1, destinatario: usuario2 },
         { remitente: usuario2, destinatario: usuario1 }
       ]
-    }).sort({ timestamp: 1 }); // orden ascendente por fecha
+    }).sort({ timestamp: 1 }); // orden de mensajes mas antiguos a mas recientes por fecha
 
+    // Si no se encuentran mensajes, se devuelve un mensaje de error
     res.json({ mensajes });
   } catch (error) {
     console.error(error);
@@ -18,7 +22,7 @@ export const buscarMensaje = async (req, res) => {
   }
 };
 
-
+//Funcion encargada de actualizar un mensaje
 export const actualizarMensajes = async (req, res) => {
   const { id } = req.params;
   const { mensaje } = req.body;
@@ -30,6 +34,7 @@ export const actualizarMensajes = async (req, res) => {
   }
 };
 
+// Funcion encargada de eliminar un mensaje
 export const eliminarMensajes = async (req, res) => {
   const { id } = req.params;
   try {
@@ -40,6 +45,7 @@ export const eliminarMensajes = async (req, res) => {
   }
 };
 
+//Funcion encargada de consultar los mensajes entre dos usuarios
 export const consultarInfoMensajes = async (req, res) => {
   const { usuario1, usuario2 } = req.params;
 
@@ -76,13 +82,15 @@ export const consultarInfoMensajes = async (req, res) => {
       });
     });
 
+    // Se convierten los productos en una lista 
     const productosFormateados = Object.entries(productos).map(([nombre, cantidad]) => ({
       nombre,
       cantidad,
     }));
-    res.json(productosFormateados);
+    res.json(productosFormateados); //Se envían los productos encontrados
 
 
+  //Si ocurre un error se devuelve un mensaje de error
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error al obtener mensajes' });
