@@ -21,6 +21,16 @@ routerPagina.get('/perfil', verifyToken, (req, res) => {
   });
 });
 
+routerPagina.delete('/mensajes/:id', verifyToken, (req, res) => {
+  const { id } = req.params;
+
+  res.status(200).json({
+    deleted: true,
+    id
+  });
+});
+
+
 routerPagina.post('/logout', (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,

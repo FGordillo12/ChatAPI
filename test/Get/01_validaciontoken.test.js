@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../../app');
+const app = require('../../app.js');
 
 describe('Validación de token', () => {
   test('GET /validacion/:token', async () => {

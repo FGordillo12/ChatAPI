@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../../app');
+const app = require('../../app.js');
 
 describe('Estadísticas de mensajes', () => {
   test('GET /estadisticas/:usuario1/:usuario2', async () => {
