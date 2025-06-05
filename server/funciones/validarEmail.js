@@ -1,21 +1,24 @@
+//importaciones de crypto y nodemailer para generar tokens aleatorios y enviar correos electrónicos
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
-
-export const generarTokenVerificacion = () => {
-  return crypto.randomBytes(32).toString('hex');
+//
+export const generarTokenVerificacion = () => { // Función para generar un token de verificación aleatorio
+  return crypto.randomBytes(32).toString('hex'); //Generacion de token de verificación utilizando crypto
 };
-
+// Función para enviar un correo electrónico de verificación al usuario
 export const enviarCorreoVerificacion = async (usuario, token) => {
   const transporter = nodemailer.createTransport({
-    service: 'Gmail',
+    service: 'Gmail', // Configuración del servicio de correo electrónico
     auth: {
-      user: 'pruebasCdisfruta@gmail.com',
-      pass: 'oxdlbhjcrqpfziuj'
+      user: 'pruebasCdisfruta@gmail.com', 
+      pass: 'oxdlbhjcrqpfziuj' 
     }
   });
 
+  // URL de verificación que se enviará al usuario
   const verificationUrl = `http://localhost:3000/api/validacion/${token}`;
 
+  // Opciones y cuerpo del correo electrónico que se enviará al usuario
   const mailOptions = {
     from: '"AMG - Plataforma gestionada a CDISFRUTA" <pruebascdisfruta@gmail.com>',
     to: usuario.email,
@@ -34,5 +37,6 @@ export const enviarCorreoVerificacion = async (usuario, token) => {
     `
   };
 
+  //Envio del correo electronico con las funciones definidas
   await transporter.sendMail(mailOptions);
 };
