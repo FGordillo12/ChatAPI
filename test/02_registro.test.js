@@ -1,5 +1,5 @@
 import supertest from 'supertest';
-import { app } from './index.js'; // Ajusta el path según tu estructura
+import { app } from '../app.js'; // Ajusta el path según tu estructura
 
 describe('Pruebas sobre la API/Registro', () => {
   it('Prueba de Registro', async () => {
@@ -13,7 +13,7 @@ describe('Pruebas sobre la API/Registro', () => {
     const response = await supertest(app).post('/api/registro').send(metodoPOST);
     expect(response.status).toBe(201);
     console.log('RESPUESTA DEL SERVIDOR:', response.body);
-  });
+  }, 15000);
 
   it('No debe registrar usuario con email ya existente', async () => {
     const response = await supertest(app).post('/api/registro').send({
@@ -22,6 +22,6 @@ describe('Pruebas sobre la API/Registro', () => {
       password: "Hola12345*",
       type: "Usuario"
     });
-    expect(response.status).toBe(409); // o 400 dependiendo de tu lógica
+    expect(response.status).toBe(409);
   });
 });

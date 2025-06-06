@@ -6,7 +6,7 @@ import { routerUsuarios } from "./server/routes/usuariosRoutes.js";
 import { routerPagina } from "./server/routes/paginaRoutes.js";
 import { routerGraficos } from "./server/routes/graficosRoutes.js";
 
-const app = express(); //Se crea una instancia de express
+export const app = express(); //Se crea una instancia de express
 
 const corsOptions = { //Importacion de cors para permitir peticiones desde el frontend
   origin: 'http://localhost:5173', //Frontend URL

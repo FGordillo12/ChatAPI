@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 
 const connectionDb = async () => { // Función para establecer la conexión a la base de datos MongoDB
-  const conexion = process.env.CONNECTION_STRING2; 
+  const conexion = process.env.CONNECTION_STRING; 
   try { //intenta conectarse a la base de datos
     const connectDb = await mongoose.connect(conexion);
     console.log(
