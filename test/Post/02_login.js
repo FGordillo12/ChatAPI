@@ -7,18 +7,18 @@ describe('Pruebas sobre la api/login', () => {
     // Intenta crear el usuario antes de la prueba de login
     await supertest(app).post('/api/registro').send({
       nombre: "Prueba Uno",
-      email: "pruebauno@gmail.com",
+      email: "usg200208@gmail.com",
       password: "Hola12345*",
       type: "Usuario",
       verified: true
     });
-    await Usuario.updateOne({ email: "pruebauno@gmail.com" }, { verified: true });
+    await Usuario.updateOne({ email: "usg200208@gmail.com" }, { verified: true });
   });
 
   describe('POST/api/login', () => {
     it('Prueba de Inicio de Sesion', async () => {
       const metodoPOST = {
-        email: "pruebauno@gmail.com",
+        email: "usg200208@gmail.com",
         password: "Hola12345*"
       };
 
@@ -36,7 +36,7 @@ describe('Pruebas sobre la api/login', () => {
   describe('POST/api/login', () => {
     it('No debe iniciar sesión con contraseña incorrecta', async () => {
       const response = await supertest(app).post('/api/login').send({
-        email: "pruebauno@gmail.com",
+        email: "usg200208@gmail.com",
         password: "ContraseñaMala123"
       });
       expect(response.status).toBe(401); // o el código que uses para autenticación fallida
