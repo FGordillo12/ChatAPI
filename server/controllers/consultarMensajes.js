@@ -39,11 +39,12 @@ export const eliminarMensajes = async (req, res) => {
   const { id } = req.params;
   try {
     await Mensaje.findByIdAndDelete(id);
-    res.json({ mensaje: 'Mensaje eliminado' });
+    res.json({ deleted: true, id });  
   } catch (err) {
     res.status(500).json({ error: 'Error al eliminar el mensaje' });
   }
 };
+
 
 //Funcion encargada de consultar los mensajes entre dos usuarios
 export const consultarInfoMensajes = async (req, res) => {
