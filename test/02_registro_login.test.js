@@ -48,7 +48,6 @@ describe('Tests completos API y base de datos', () => {
 
   describe('API /login', () => {
     beforeAll(async () => {
-      // Registrar usuario para login
       await supertest(app).post('/api/registro').send({
         nombre: "Prueba Login",
         email: "usg200208@gmail.com",
@@ -56,24 +55,23 @@ describe('Tests completos API y base de datos', () => {
         type: "Usuario"
       });
 
-      // Marcar usuario como verificado
       await Usuario.updateOne({ email: "usg200208@gmail.com" }, { verified: true });
 
-      // Login y captura cookies
       const response = await supertest(app).post('/api/login').send({
         email: "usg200208@gmail.com",
         password: "Hola12345*"
       });
 
       cookies = response.headers['set-cookie'];
-      if (!cookies) {
-        throw new Error('No se recibió cookie en login');
-      }
     });
 
-    it('Debe iniciar sesión correctamente', () => {
-      expect(cookies).toBeDefined();
-      expect(cookies.length).toBeGreaterThan(0);
+    it('Debe iniciar sesión correctamente', async () => {
+      const response = await supertest(app).post('/api/login').send({
+        email: "usg200208@gmail.com",
+        password: "Hola12345*"
+      });
+      expect(response.status).toBe(200);
+      expect(response.headers['set-cookie']).toBeDefined();
     });
 
     it('No debe iniciar sesión con contraseña incorrecta', async () => {
@@ -89,7 +87,7 @@ describe('Tests completos API y base de datos', () => {
     it('Debe actualizar perfil con sesión válida', async () => {
       const res = await supertest(app)
         .patch('/api/perfil')
-        .set('Cookie', cookies) // cookies validas para autenticacion
+        .set('Cookie', cookies)
         .send({ nombre: "Nuevo Nombre", email: "usg200208@gmail.com" });
 
       expect(res.status).toBe(200);
@@ -104,3 +102,4 @@ describe('Tests completos API y base de datos', () => {
     });
   });
 });
+
