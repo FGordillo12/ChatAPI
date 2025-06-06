@@ -82,58 +82,50 @@ function generarReportePDF(productos, nombreArchivo) {
 export const generarReporteMensajes = async (req, res) => {
   const { usuario1, usuario2 } = req.params;
 
-  try { //Buscar mensajes entre los dos usuarios
+  try {
     const mensajes = await Mensaje.find({
       $or: [
         { remitente: usuario1, destinatario: usuario2 },
         { remitente: usuario2, destinatario: usuario1 }
       ]
     }).sort({ timestamp: 1 });
-    //Extraer el texto de los mensajes
+
     const mensajesTexto = mensajes
       .filter(m => m.mensaje)
       .map(m => m.mensaje);
-    //Filtrar los mensajes que contienen productos
+
     const mensajesProductos = mensajesTexto.filter(text => /[a-zA-Z]+:\s*\d+/.test(text));
     const productos = {};
-    // Procesar los mensajes para contar productos
+
     mensajesProductos.forEach(mensaje => {
       const items = mensaje.split(',');
       items.forEach(item => {
         const [nombre, cantidad] = item.split(':').map(str => str.trim());
         if (nombre && cantidad && !isNaN(cantidad)) {
-          if (productos[nombre]) {
-            productos[nombre] += Number(cantidad);
-          } else {
-            productos[nombre] = Number(cantidad);
-          }
+          productos[nombre] = (productos[nombre] || 0) + Number(cantidad);
         }
       });
     });
 
-    // Añadir precio simulado a cada producto
     const productosPDF = {};
     Object.entries(productos).forEach(([nombre, cantidad]) => {
       productosPDF[nombre] = {
         cantidad,
-        precio: Math.floor(Math.random() * 5 + 1) + 0.99 // precio aleatorio
+        precio: Math.floor(Math.random() * 5 + 1) + 0.99
       };
     });
 
-    // Generar el PDF con los productos
     const nombreArchivo = `reporte_${usuario1}_y_${usuario2}.pdf`;
     const rutaArchivo = generarReportePDF(productosPDF, nombreArchivo);
 
-    // Enviar el archivo 
     res.status(201).json({
-      "message":"Reporte Creado con Éxito",
-      "nombre":nombreArchivo, 
-      "ruta": rutaArchivo
-    })
-      
-     res.status(500).json({ error: 'Error al enviar el reporte PDF' }); //Error al enviar el reporte PDF
+      message: "Reporte Creado con Éxito",
+      nombre: nombreArchivo,
+      ruta: rutaArchivo
+    });
+
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al generar el reporte de mensajes' }); //Error al generar el reporte de mensajes
+    res.status(500).json({ error: 'Error al generar el reporte de mensajes' });
   }
 };
