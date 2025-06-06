@@ -29,3 +29,5 @@ const startServer = async () => {
 };
 
 startServer(); // Inicia el servidor y la conexión a la base de datos
+
+export { app }; // Exporta la app para pruebas unitarias

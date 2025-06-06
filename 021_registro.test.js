@@ -1,5 +1,5 @@
 import supertest from 'supertest';
-import { app } from '../../index.js'; // Ajusta el path según tu estructura
+import { app } from './index.js'; // Ajusta el path según tu estructura
 
 describe('Pruebas sobre la API/Registro', () => {
   it('Prueba de Registro', async () => {
