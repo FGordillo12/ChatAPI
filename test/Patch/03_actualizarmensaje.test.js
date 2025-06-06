@@ -1,5 +1,5 @@
-import supertest from 'supertest';
-import { app } from './index.js';
+const request = require('supertest');
+const app = require('../../app.js');
 
 describe('Actualizar mensaje', () => {
   test('PATCH /mensajes/:id', async () => {

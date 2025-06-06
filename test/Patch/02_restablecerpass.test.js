@@ -1,5 +1,5 @@
-import supertest from 'supertest';
-import { app } from './index.js';
+const request = require('supertest');
+const app = require('../../app.js');
 
 describe('Restablecer contraseña', () => {
   test('PATCH /restablecer_password/:token', async () => {
